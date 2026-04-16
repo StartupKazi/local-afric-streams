@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { CategoryChips } from "@/components/CategoryChips";
 import { AdBanner } from "@/components/AdBanner";
@@ -6,6 +6,7 @@ import { VideoCard } from "@/components/VideoCard";
 import { SponsoredCard } from "@/components/SponsoredCard";
 import { CreatorCTA } from "@/components/CreatorCTA";
 import { Footer } from "@/components/Footer";
+import { VerticalAdSpace } from "@/components/VerticalAdSpace";
 import { ChevronRight } from "lucide-react";
 
 import thumbCapetown from "@/assets/thumb-capetown.jpg";
@@ -103,39 +104,54 @@ function HomePage() {
       <Header />
       <CategoryChips />
 
-      <div className="mt-4">
-        <AdBanner />
+      <div className="flex">
+        {/* Left vertical ad */}
+        <VerticalAdSpace />
+
+        {/* Main content */}
+        <div className="flex-1 min-w-0">
+          <div className="mt-4">
+            <AdBanner />
+          </div>
+
+          <section className="mx-auto mt-10 max-w-[1400px] px-6">
+            <div className="flex items-center justify-between">
+              <h2 className="font-display text-xl font-bold text-foreground">
+                Recommended for you
+              </h2>
+              <button className="flex items-center gap-1 font-body text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+                View all <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {recommended.map((video) => (
+                <Link key={video.title} to="/watch" className="block">
+                  <VideoCard {...video} />
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="mx-auto mt-10 max-w-[1400px] px-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              <SponsoredCard />
+              {moreVideos.slice(0, 3).map((video) => (
+                <Link key={video.title} to="/watch" className="block">
+                  <VideoCard {...video} />
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-16">
+            <CreatorCTA />
+          </section>
+        </div>
+
+        {/* Right vertical ad */}
+        <VerticalAdSpace />
       </div>
-
-      <section className="mx-auto mt-10 max-w-[1400px] px-6">
-        <div className="flex items-center justify-between">
-          <h2 className="font-display text-xl font-bold text-foreground">
-            Recommended for you
-          </h2>
-          <button className="flex items-center gap-1 font-body text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
-            View all <ChevronRight className="h-4 w-4" />
-          </button>
-        </div>
-
-        <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {recommended.map((video) => (
-            <VideoCard key={video.title} {...video} />
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto mt-10 max-w-[1400px] px-6">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <SponsoredCard />
-          {moreVideos.slice(0, 3).map((video) => (
-            <VideoCard key={video.title} {...video} />
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-16">
-        <CreatorCTA />
-      </section>
 
       <Footer />
     </div>
