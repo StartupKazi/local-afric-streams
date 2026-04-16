@@ -21,31 +21,85 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Local Afric Videos — Premium African Content Streaming" },
-      { name: "description", content: "Discover and stream the best African content. Music, documentaries, tech, cooking and more from creators across the continent." },
-      { property: "og:title", content: "Local Afric Videos — Premium African Content Streaming" },
-      { property: "og:description", content: "Discover and stream the best African content from creators across the continent." },
+      {
+        name: "description",
+        content:
+          "Discover and stream the best African content. Music, documentaries, tech, cooking and more from creators across the continent.",
+      },
+      {
+        property: "og:title",
+        content: "Local Afric Videos — Premium African Content Streaming",
+      },
+      {
+        property: "og:description",
+        content:
+          "Discover and stream the best African content from creators across the continent.",
+      },
     ],
   }),
   component: HomePage,
 });
 
 const recommended = [
-  { thumbnail: thumbCapetown, title: "Exploring the Hidden Gems of Cape Town", duration: "12:45", views: "12.5k", likes: "1.2k", quality: "1080p" },
-  { thumbnail: thumbJazz, title: "Daily Afro-Jazz Session | Live Request Hour", views: "3.4k watching", isLive: true },
-  { thumbnail: thumbTech, title: "Top 10 Tech Startups in Lagos to Watch", duration: "08:12", views: "45k", likes: "312" },
-  { thumbnail: thumbJollof, title: "How to make the Perfect Jollof Rice", duration: "22:30", views: "120k", likes: "12k" },
+  {
+    thumbnail: thumbCapetown,
+    title: "Exploring the Hidden Gems of Cape Town",
+    duration: "12:45",
+    views: "12.5k",
+    likes: "1.2k",
+    quality: "1080p",
+  },
+  {
+    thumbnail: thumbJazz,
+    title: "Daily Afro-Jazz Session | Live Request Hour",
+    views: "3.4k watching",
+    isLive: true,
+  },
+  {
+    thumbnail: thumbTech,
+    title: "Top 10 Tech Startups in Lagos to Watch",
+    duration: "08:12",
+    views: "45k",
+    likes: "312",
+  },
+  {
+    thumbnail: thumbJollof,
+    title: "How to make the Perfect Jollof Rice",
+    duration: "22:30",
+    views: "120k",
+    likes: "12k",
+  },
 ];
 
 const moreVideos = [
-  { thumbnail: thumbArchitecture, title: "Sustainable Architecture in Accra", views: "8.2k" },
-  { thumbnail: thumbBluecity, title: "The Blue City: A Visual Journey", duration: "10:55", views: "25k" },
-  { thumbnail: thumbIllustration, title: "Masterclass: Modern Digital Illustration", duration: "35:10", views: "18k" },
-  { thumbnail: thumbNairobi, title: "Nairobi After Dark: Urban Nightlife", duration: "28:47", views: "42k" },
+  {
+    thumbnail: thumbArchitecture,
+    title: "Sustainable Architecture in Accra",
+    views: "8.2k",
+  },
+  {
+    thumbnail: thumbBluecity,
+    title: "The Blue City: A Visual Journey",
+    duration: "10:55",
+    views: "25k",
+  },
+  {
+    thumbnail: thumbIllustration,
+    title: "Masterclass: Modern Digital Illustration",
+    duration: "35:10",
+    views: "18k",
+  },
+  {
+    thumbnail: thumbNairobi,
+    title: "Nairobi After Dark: Urban Nightlife",
+    duration: "28:47",
+    views: "42k",
+  },
 ];
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-background" id="home">
+    <div className="min-h-screen bg-background">
       <Header />
       <CategoryChips />
 
@@ -53,7 +107,6 @@ function HomePage() {
         <AdBanner />
       </div>
 
-      {/* Recommended */}
       <section className="mx-auto mt-10 max-w-[1400px] px-6">
         <div className="flex items-center justify-between">
           <h2 className="font-display text-xl font-bold text-foreground">
@@ -71,7 +124,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* More + Sponsored */}
       <section className="mx-auto mt-10 max-w-[1400px] px-6">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <SponsoredCard />
@@ -81,7 +133,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Creator CTA */}
       <section className="mt-16">
         <CreatorCTA />
       </section>
