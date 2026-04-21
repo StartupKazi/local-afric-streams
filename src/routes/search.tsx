@@ -53,7 +53,11 @@ function SearchPage() {
               e.preventDefault();
               const fd = new FormData(e.currentTarget);
               navigate({
-                search: (prev) => ({ ...prev, q: String(fd.get("q") ?? ""), page: 1 }),
+                search: (prev: { q: string; category: string; page: number }) => ({
+                  ...prev,
+                  q: String(fd.get("q") ?? ""),
+                  page: 1,
+                }),
               });
             }}
             className="relative w-full max-w-md"
@@ -73,7 +77,11 @@ function SearchPage() {
             <Link
               key={c}
               to="/search"
-              search={(prev) => ({ ...prev, category: c, page: 1 })}
+              search={(prev: { q: string; category: string; page: number }) => ({
+                ...prev,
+                category: c,
+                page: 1,
+              })}
               className={`rounded-full px-4 py-1.5 font-body text-sm font-medium transition-colors ${
                 category === c
                   ? "bg-primary text-primary-foreground"
