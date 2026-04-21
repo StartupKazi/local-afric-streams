@@ -5,8 +5,7 @@ import { Header } from "@/components/Header";
 import { CategoryChips } from "@/components/CategoryChips";
 import { AdBanner } from "@/components/AdBanner";
 import { VideoCard } from "@/components/VideoCard";
-import { SponsoredCard } from "@/components/SponsoredCard";
-import { CreatorCTA } from "@/components/CreatorCTA";
+import { AdSlot } from "@/components/AdSlot";
 import { Footer } from "@/components/Footer";
 import { VerticalAdSpace } from "@/components/VerticalAdSpace";
 import { Pager } from "@/components/Pager";
@@ -86,15 +85,21 @@ function HomePage() {
           </section>
 
           <section className="mx-auto mt-10 max-w-[1400px] px-4 md:px-6">
+            <AdSlot variant="wide" label="Mid-Page Ad" />
+          </section>
+
+          <section className="mx-auto mt-10 max-w-[1400px] px-4 md:px-6">
             <h2 className="font-display text-lg font-bold text-foreground md:text-xl">
               Browse all videos
             </h2>
             <div className="mt-5 grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
-              <SponsoredCard />
-              {items.slice(0, PAGE_SIZE - 1).map((video) => (
-                <Link key={video.id} to="/watch" className="block">
-                  <VideoCard {...video} />
-                </Link>
+              {items.map((video, idx) => (
+                <>
+                  {idx === 4 && <AdSlot key="ad-1" variant="square" label="Sponsored" />}
+                  <Link key={video.id} to="/watch" className="block">
+                    <VideoCard {...video} />
+                  </Link>
+                </>
               ))}
             </div>
 
@@ -106,8 +111,8 @@ function HomePage() {
             />
           </section>
 
-          <section className="mt-16">
-            <CreatorCTA />
+          <section className="mx-auto mt-16 max-w-[1400px] px-4 md:px-6">
+            <AdSlot variant="banner" label="Bottom Banner Ad" />
           </section>
         </div>
 
