@@ -26,9 +26,9 @@ function WatchPage() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="mx-auto mt-4 max-w-[1400px] px-6">
+      <main className="mx-auto mt-4 max-w-[1400px] px-4 md:px-6">
         {/* Top ad banner */}
-        <div className="mb-4 rounded-xl bg-surface-container-low px-6 py-3 flex items-center justify-between">
+        <div className="mb-4 hidden rounded-xl bg-surface-container-low px-6 py-3 sm:flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
               <ShoppingCart className="h-4 w-4 text-primary" />

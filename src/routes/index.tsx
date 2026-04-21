@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { zodValidator, fallback } from "@tanstack/zod-adapter";
+import { z } from "zod";
 import { Header } from "@/components/Header";
 import { CategoryChips } from "@/components/CategoryChips";
 import { AdBanner } from "@/components/AdBanner";
@@ -7,18 +9,17 @@ import { SponsoredCard } from "@/components/SponsoredCard";
 import { CreatorCTA } from "@/components/CreatorCTA";
 import { Footer } from "@/components/Footer";
 import { VerticalAdSpace } from "@/components/VerticalAdSpace";
+import { Pager } from "@/components/Pager";
+import { ALL_VIDEOS, getRecommended, paginate } from "@/lib/videos";
 import { ChevronRight } from "lucide-react";
 
-import thumbCapetown from "@/assets/thumb-capetown.jpg";
-import thumbJazz from "@/assets/thumb-jazz.jpg";
-import thumbTech from "@/assets/thumb-tech.jpg";
-import thumbJollof from "@/assets/thumb-jollof.jpg";
-import thumbArchitecture from "@/assets/thumb-architecture.jpg";
-import thumbBluecity from "@/assets/thumb-bluecity.jpg";
-import thumbIllustration from "@/assets/thumb-illustration.jpg";
-import thumbNairobi from "@/assets/thumb-nairobi.jpg";
+const PAGE_SIZE = 12;
+const homeSchema = z.object({
+  page: fallback(z.number().int().min(1), 1).default(1),
+});
 
 export const Route = createFileRoute("/")({
+  validateSearch: zodValidator(homeSchema),
   head: () => ({
     meta: [
       { title: "Local Afric Videos — Premium African Content Streaming" },
@@ -41,64 +42,12 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const recommended = [
-  {
-    thumbnail: thumbCapetown,
-    title: "Exploring the Hidden Gems of Cape Town",
-    duration: "12:45",
-    views: "12.5k",
-    likes: "1.2k",
-    quality: "1080p",
-  },
-  {
-    thumbnail: thumbJazz,
-    title: "Daily Afro-Jazz Session | Live Request Hour",
-    views: "3.4k watching",
-    isLive: true,
-  },
-  {
-    thumbnail: thumbTech,
-    title: "Top 10 Tech Startups in Lagos to Watch",
-    duration: "08:12",
-    views: "45k",
-    likes: "312",
-  },
-  {
-    thumbnail: thumbJollof,
-    title: "How to make the Perfect Jollof Rice",
-    duration: "22:30",
-    views: "120k",
-    likes: "12k",
-  },
-];
-
-const moreVideos = [
-  {
-    thumbnail: thumbArchitecture,
-    title: "Sustainable Architecture in Accra",
-    views: "8.2k",
-  },
-  {
-    thumbnail: thumbBluecity,
-    title: "The Blue City: A Visual Journey",
-    duration: "10:55",
-    views: "25k",
-  },
-  {
-    thumbnail: thumbIllustration,
-    title: "Masterclass: Modern Digital Illustration",
-    duration: "35:10",
-    views: "18k",
-  },
-  {
-    thumbnail: thumbNairobi,
-    title: "Nairobi After Dark: Urban Nightlife",
-    duration: "28:47",
-    views: "42k",
-  },
-];
-
 function HomePage() {
+  const { page } = Route.useSearch();
+  const recommended = getRecommended();
+  const browseAll = ALL_VIDEOS.slice(4);
+  const { items, totalPages } = paginate(browseAll, page, PAGE_SIZE);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -114,34 +63,47 @@ function HomePage() {
             <AdBanner />
           </div>
 
-          <section className="mx-auto mt-10 max-w-[1400px] px-6">
+          <section className="mx-auto mt-8 max-w-[1400px] px-4 md:mt-10 md:px-6">
             <div className="flex items-center justify-between">
-              <h2 className="font-display text-xl font-bold text-foreground">
+              <h2 className="font-display text-lg font-bold text-foreground md:text-xl">
                 Recommended for you
               </h2>
-              <button className="flex items-center gap-1 font-body text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+              <Link
+                to="/categories"
+                className="flex items-center gap-1 font-body text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+              >
                 View all <ChevronRight className="h-4 w-4" />
-              </button>
+              </Link>
             </div>
 
-            <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-5 grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
               {recommended.map((video) => (
-                <Link key={video.title} to="/watch" className="block">
+                <Link key={video.id} to="/watch" className="block">
                   <VideoCard {...video} />
                 </Link>
               ))}
             </div>
           </section>
 
-          <section className="mx-auto mt-10 max-w-[1400px] px-6">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <section className="mx-auto mt-10 max-w-[1400px] px-4 md:px-6">
+            <h2 className="font-display text-lg font-bold text-foreground md:text-xl">
+              Browse all videos
+            </h2>
+            <div className="mt-5 grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
               <SponsoredCard />
-              {moreVideos.slice(0, 3).map((video) => (
-                <Link key={video.title} to="/watch" className="block">
+              {items.slice(0, PAGE_SIZE - 1).map((video) => (
+                <Link key={video.id} to="/watch" className="block">
                   <VideoCard {...video} />
                 </Link>
               ))}
             </div>
+
+            <Pager
+              page={page}
+              totalPages={totalPages}
+              to="/"
+              buildSearch={(p) => ({ page: p })}
+            />
           </section>
 
           <section className="mt-16">
