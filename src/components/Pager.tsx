@@ -1,10 +1,10 @@
-import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Link, type LinkProps } from "@tanstack/react-router";
 
 interface PagerProps {
   page: number;
   totalPages: number;
-  to: string;
+  to: LinkProps["to"];
   buildSearch: (page: number) => Record<string, unknown>;
 }
 
@@ -29,8 +29,7 @@ export function Pager({ page, totalPages, to, buildSearch }: PagerProps) {
     <nav className="mt-10 flex items-center justify-center gap-1.5" aria-label="Pagination">
       <Link
         to={to}
-        // @ts-expect-error generic search
-        search={buildSearch(Math.max(1, page - 1))}
+        search={buildSearch(Math.max(1, page - 1)) as never}
         className={`${linkBase} ${page === 1 ? "pointer-events-none text-muted-foreground/50" : "text-muted-foreground hover:bg-surface-container-high hover:text-foreground"}`}
       >
         <ChevronLeft className="h-4 w-4" />
@@ -44,8 +43,7 @@ export function Pager({ page, totalPages, to, buildSearch }: PagerProps) {
           <Link
             key={it}
             to={to}
-            // @ts-expect-error generic search
-            search={buildSearch(it)}
+            search={buildSearch(it) as never}
             className={`${linkBase} ${
               it === page
                 ? "bg-primary text-primary-foreground"
@@ -58,8 +56,7 @@ export function Pager({ page, totalPages, to, buildSearch }: PagerProps) {
       )}
       <Link
         to={to}
-        // @ts-expect-error generic search
-        search={buildSearch(Math.min(totalPages, page + 1))}
+        search={buildSearch(Math.min(totalPages, page + 1)) as never}
         className={`${linkBase} ${page === totalPages ? "pointer-events-none text-muted-foreground/50" : "text-muted-foreground hover:bg-surface-container-high hover:text-foreground"}`}
       >
         <ChevronRight className="h-4 w-4" />
