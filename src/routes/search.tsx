@@ -6,7 +6,9 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { VideoCard } from "@/components/VideoCard";
 import { Pager } from "@/components/Pager";
+import { AdSlot } from "@/components/AdSlot";
 import { CATEGORIES, paginate, searchVideos } from "@/lib/videos";
+import { Fragment } from "react";
 
 const PAGE_SIZE = 12;
 
@@ -93,6 +95,10 @@ function SearchPage() {
           ))}
         </div>
 
+        <div className="mt-8">
+          <AdSlot variant="wide" label="Search Results Ad" />
+        </div>
+
         {items.length === 0 ? (
           <div className="mt-16 rounded-2xl bg-surface-container-low p-12 text-center">
             <p className="font-display text-lg font-semibold text-foreground">No videos found</p>
@@ -102,10 +108,14 @@ function SearchPage() {
           </div>
         ) : (
           <div className="mt-8 grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-            {items.map((v) => (
-              <Link key={v.id} to="/watch" className="block">
-                <VideoCard {...v} />
-              </Link>
+            {items.map((v, idx) => (
+              <Fragment key={v.id}>
+                {idx === 3 && <AdSlot variant="square" label="Sponsored" />}
+                {idx === 9 && <AdSlot variant="square" label="Sponsored" />}
+                <Link to="/watch" className="block">
+                  <VideoCard {...v} />
+                </Link>
+              </Fragment>
             ))}
           </div>
         )}
@@ -116,6 +126,10 @@ function SearchPage() {
           to="/search"
           buildSearch={(p) => ({ q, category, page: p })}
         />
+
+        <div className="mt-10">
+          <AdSlot variant="banner" label="Footer Ad" />
+        </div>
       </main>
       <Footer />
     </div>

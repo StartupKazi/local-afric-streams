@@ -11,6 +11,7 @@ import { VerticalAdSpace } from "@/components/VerticalAdSpace";
 import { Pager } from "@/components/Pager";
 import { ALL_VIDEOS, getRecommended, paginate } from "@/lib/videos";
 import { ChevronRight } from "lucide-react";
+import { Fragment } from "react";
 
 const PAGE_SIZE = 12;
 const homeSchema = z.object({
@@ -94,12 +95,12 @@ function HomePage() {
             </h2>
             <div className="mt-5 grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
               {items.map((video, idx) => (
-                <>
-                  {idx === 4 && <AdSlot key="ad-1" variant="square" label="Sponsored" />}
-                  <Link key={video.id} to="/watch" className="block">
+                <Fragment key={video.id}>
+                  {idx === 4 && <AdSlot variant="square" label="Sponsored" />}
+                  <Link to="/watch" className="block">
                     <VideoCard {...video} />
                   </Link>
-                </>
+                </Fragment>
               ))}
             </div>
 
