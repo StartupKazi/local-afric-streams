@@ -15,7 +15,8 @@ import { Fragment } from "react";
 
 const PAGE_SIZE = 12;
 const homeSchema = z.object({
-  page: fallback(z.number().int().min(1), 1).default(1),
+  // Keep the home URL clean (`/`), and only add `?page=` when user actually paginates.
+  page: z.coerce.number().int().min(1).optional(),
 });
 
 export const Route = createFileRoute("/")({
@@ -44,9 +45,10 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const { page } = Route.useSearch();
+  const currentPage = page ?? 1;
   const recommended = getRecommended();
   const browseAll = ALL_VIDEOS.slice(4);
-  const { items, totalPages } = paginate(browseAll, page, PAGE_SIZE);
+  const { items, totalPages } = paginate(browseAll, currentPage, PAGE_SIZE);
 
   return (
     <div className="min-h-screen bg-background">
@@ -105,10 +107,10 @@ function HomePage() {
             </div>
 
             <Pager
-              page={page}
+              page={currentPage}
               totalPages={totalPages}
               to="/"
-              buildSearch={(p) => ({ page: p })}
+              buildSearch={(p) => ({ page: p === 1 ? undefined : p })}
             />
           </section>
 

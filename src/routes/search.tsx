@@ -15,7 +15,8 @@ const PAGE_SIZE = 12;
 const searchSchema = z.object({
   q: fallback(z.string(), "").default(""),
   category: fallback(z.string(), "All").default("All"),
-  page: fallback(z.number().int().min(1), 1).default(1),
+  // Keep the URL clean (`/search`), and only add `page` when user paginates.
+  page: z.coerce.number().int().min(1).optional(),
 });
 
 export const Route = createFileRoute("/search")({
@@ -33,7 +34,8 @@ function SearchPage() {
   const { q, category, page } = Route.useSearch();
   const navigate = useNavigate({ from: "/search" });
   const results = searchVideos(q, category);
-  const { items, totalPages } = paginate(results, page, PAGE_SIZE);
+  const currentPage = page ?? 1;
+  const { items, totalPages } = paginate(results, currentPage, PAGE_SIZE);
 
   return (
     <div className="min-h-screen bg-background">
@@ -121,10 +123,10 @@ function SearchPage() {
         )}
 
         <Pager
-          page={page}
+          page={currentPage}
           totalPages={totalPages}
           to="/search"
-          buildSearch={(p) => ({ q, category, page: p })}
+          buildSearch={(p) => ({ q, category, page: p === 1 ? undefined : p })}
         />
 
         <div className="mt-10">
