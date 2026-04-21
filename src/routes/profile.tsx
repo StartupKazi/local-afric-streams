@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { VideoCard } from "@/components/VideoCard";
+import { AdSlot } from "@/components/AdSlot";
 import { ALL_VIDEOS } from "@/lib/videos";
 import { History, Heart, MessageSquare, Bookmark, Settings } from "lucide-react";
 
@@ -37,6 +38,10 @@ function ProfilePage() {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="mx-auto max-w-[1400px] px-4 py-8 md:px-6">
+        <div className="mb-6">
+          <AdSlot variant="wide" label="Profile Top Ad" />
+        </div>
+
         {/* Profile header */}
         <div className="flex flex-col items-start gap-5 rounded-3xl bg-surface-container-low p-6 md:flex-row md:items-center md:p-8">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary font-display text-3xl font-bold text-primary-foreground">
@@ -83,6 +88,10 @@ function ProfilePage() {
           {tab === "saved" && <VideoGrid videos={saved} emptyMsg="Your library is empty." />}
           {tab === "comments" && <CommentsList />}
           {tab === "account" && <AccountForm />}
+        </div>
+
+        <div className="mt-10">
+          <AdSlot variant="banner" label="Profile Bottom Ad" />
         </div>
       </main>
       <Footer />
