@@ -67,7 +67,7 @@ function WatchPage() {
               </span>
             </div>
 
-            <h1 className="mt-3 font-display text-2xl font-bold text-foreground">
+            <h1 className="mt-3 truncate font-display text-2xl font-bold text-foreground">
               The Hidden Heart of Nairobi: A Cinematic Journey
             </h1>
 
