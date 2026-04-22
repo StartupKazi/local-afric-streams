@@ -63,8 +63,8 @@ function HomePage() {
             <AdBanner />
           </div>
 
-          <section className="mx-auto mt-8 max-w-[1400px] px-4 md:mt-10 md:px-6">
-            <div className="flex items-center justify-between">
+          <section className="mx-auto mt-8 max-w-[1400px] md:mt-10 md:px-6">
+            <div className="flex items-center justify-between px-4 md:px-0">
               <h2 className="font-display text-lg font-bold text-foreground md:text-xl">
                 Recommended for you
               </h2>
@@ -76,7 +76,7 @@ function HomePage() {
               </Link>
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
+            <div className="mt-5 grid grid-cols-2 gap-0 md:gap-6 lg:grid-cols-4">
               {recommended.map((video) => (
                 <Link key={video.id} to="/watch" className="block">
                   <VideoCard {...video} />
@@ -89,11 +89,11 @@ function HomePage() {
             <AdSlot variant="wide" label="Mid-Page Ad" />
           </section>
 
-          <section className="mx-auto mt-10 max-w-[1400px] px-4 md:px-6">
-            <h2 className="font-display text-lg font-bold text-foreground md:text-xl">
+          <section className="mx-auto mt-10 max-w-[1400px] md:px-6">
+            <h2 className="font-display text-lg font-bold text-foreground md:text-xl px-4 md:px-0">
               Browse all videos
             </h2>
-            <div className="mt-5 grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
+            <div className="mt-5 grid grid-cols-2 gap-0 md:gap-6 lg:grid-cols-4">
               {items.map((video, idx) => (
                 <Fragment key={video.id}>
                   {idx === 4 && <AdSlot variant="square" label="Sponsored" />}
@@ -104,12 +104,14 @@ function HomePage() {
               ))}
             </div>
 
+            <div className="px-4 md:px-0">
             <Pager
               page={page}
               totalPages={totalPages}
               to="/"
               buildSearch={(p) => ({ page: p })}
             />
+            </div>
           </section>
 
           <section className="mx-auto mt-16 max-w-[1400px] px-4 md:px-6">
