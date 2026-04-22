@@ -26,7 +26,7 @@ export function VideoCard({
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
     >
-      <div className="relative overflow-hidden rounded-xl">
+      <div className="relative overflow-hidden rounded-none md:rounded-xl">
         <img
           src={thumbnail}
           alt={title}
@@ -56,7 +56,7 @@ export function VideoCard({
         )}
       </div>
 
-      <div className="mt-3">
+      <div className="mt-3 px-2 md:px-0">
         <h3 className="font-display text-sm font-semibold leading-tight text-foreground line-clamp-2">
           {title}
         </h3>
