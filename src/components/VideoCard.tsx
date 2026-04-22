@@ -57,8 +57,8 @@ export function VideoCard({
       </div>
 
       <div className="mt-3 px-2 md:px-0">
-        <h3 className="font-display text-xs font-semibold leading-tight text-foreground line-clamp-2 md:text-[13px]">
-          {title}
+        <h3 className="font-display text-xs font-semibold leading-tight text-foreground truncate md:text-[13px]">
+          {title.length > 32 ? `${title.slice(0, 32).trimEnd()}…` : title}
         </h3>
         <div className="mt-1.5 flex items-center gap-3 font-body text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
