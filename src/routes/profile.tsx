@@ -114,7 +114,7 @@ function VideoGrid({
     );
   }
   return (
-    <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="-mx-4 grid grid-cols-2 gap-0 md:mx-0 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
       {videos.map((v) => (
         <Link key={v.id} to="/watch" className="block">
           <VideoCard {...v} />
