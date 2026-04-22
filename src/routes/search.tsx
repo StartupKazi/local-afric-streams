@@ -107,7 +107,7 @@ function SearchPage() {
             </p>
           </div>
         ) : (
-          <div className="mt-8 grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="-mx-4 mt-8 grid grid-cols-2 gap-0 md:mx-0 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
             {items.map((v, idx) => (
               <Fragment key={v.id}>
                 {idx === 3 && <AdSlot variant="square" label="Sponsored" />}
